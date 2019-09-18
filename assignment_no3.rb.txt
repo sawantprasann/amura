@@ -1,0 +1,53 @@
+class Match
+    attr_reader :arr
+    def initialize(arr)
+        @arr = arr.map{|m| m.split(";")}
+    end
+    
+    def display_results
+        result = Hash.new
+        ["Team A","Team B", "Team C", "Team D"].each do |team_name|
+            result[team_name] = Array.new(5,0)
+        end
+        
+        @arr.each do |row|
+            team_1 = row[0]
+            team_2 = row[1]
+                re = row[2]
+            result[team_1][0] += 1
+            result[team_2][0] += 1
+            case re
+            when "win"
+                result[team_1][1] += 1
+                result[team_2][3] += 1
+            when "loss"
+                result[team_1][3] += 1
+                result[team_2][1] += 1
+            when "draw"
+                result[team_1][2] += 1
+                result[team_2][2] += 1
+            end   
+        end
+        result.each do |team,v| 
+            v[4] = (v[1] * 3) + v[2] 
+           puts team +"   |  " + v.join(" |  ")
+        end
+    end
+    
+    def display_header
+       puts "Team     | MP |  W |  D |  L |  P"
+    end
+end
+
+arr = [
+"Team B;Team C;win",
+"Team A;Team D;draw",
+"Team A;Team B;win",
+"Team D;Team C;loss",
+"Team C;Team A;loss",
+"Team B;Team D;win"
+]
+
+result = Match.new(arr)
+result.display_header
+result.display_results

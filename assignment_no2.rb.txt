@@ -1,0 +1,17 @@
+def get_addresses
+  users = User.includes(:address).where("address.city is not null")
+  users.map{|m| m.address}  
+end
+
+
+class Greeting
+  attr_accessor :name
+  def initialize(name)
+    @name = name
+  end
+end
+
+
+def sum(*args)
+  args.inject(:+)
+end

@@ -1,0 +1,24 @@
+class Enum
+    private
+    def self.enum_attr(attr = {})
+	attr.each do |attr_name, values|
+	    values.each do |method_name| 
+	        name = method_name.to_s
+	        define_method(name + '?') do
+		    @attr == name
+	        end									
+            end
+        end
+    end
+end
+
+class User < Enum
+    enum_attr :attr => [ :active, :inactive, :pending]
+    def initialize(attrs)
+	@attr = attrs
+    end
+end
+a = User.new("pending")
+puts "#{a.active?}"
+puts "#{a.pending?}" 
+puts "#{a.inactive?}"
