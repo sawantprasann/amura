@@ -1,5 +1,5 @@
 def get_addresses
-  users = User.includes(:address).where("address.city is not null")
+  users = User.includes(:address).where("addresses.city is not null")
   users.map{|m| m.address}  
 end
 
